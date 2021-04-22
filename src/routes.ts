@@ -19,6 +19,8 @@ export {
     routes
 };
 
+
+
 /**
  * Tipos de paramentros
  * Routes Params => Paramentros de rotas
