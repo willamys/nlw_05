@@ -1,2 +1,2 @@
 # nlw_05
-Projeto NLW
+Projeto da trilha Nodejs da 5ª NLW.
