@@ -40,7 +40,7 @@ io.on("connect", (socket) => {
         const allMessages = await messagesService.listByUser(user_id);
         //emitir o evento
         socket.emit("client_list_all_messages", allMessages);
-        //emitiir a lista de todos os usuário em atendimento
+
         const allUsers = await connectionsService.findAllWithoutAdmin();
         io.emit("admin_list_all_users", allUsers);
     });
@@ -49,6 +49,7 @@ io.on("connect", (socket) => {
         const {text, socket_admin_id} = params;
         const socket_id = socket.id;
         const { user_id } = await connectionsService.findBySocketID(socket_id);
+        const user = await usersService.findById(user_id);
 
         //salvar mensagem no banco
         const message = await messagesService.create({
@@ -58,7 +59,8 @@ io.on("connect", (socket) => {
         //enviar mesg para o atentende
         io.to(socket_admin_id).emit("admin_receive_message",{
           message,
-          socket_id
+          socket_id,
+          email: user.email
         });
     });
 });
